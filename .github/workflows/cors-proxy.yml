@@ -1,0 +1,30 @@
+name: CORS Proxy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Start proxy server
+      run: |
+        npm install -g local-cors-proxy
+        lcp --proxyUrl https://hkp.maanmittauslaitos.fi --port 8080
+
+    - name: Keep GitHub Action running
+      run: sleep infinity
