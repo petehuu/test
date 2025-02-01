@@ -23,11 +23,15 @@ jobs:
       continue-on-error: true
 
     - name: Start proxy server
-      run: npm start
+      run: |
+        npm start
+        echo "Proxy server started successfully"
       continue-on-error: true
 
     - name: Verify proxy server is running
-      run: curl -I http://localhost:8080
+      run: |
+        curl -I http://localhost:8080
+        echo "Proxy server verification completed"
       continue-on-error: true
 
     - name: Debug info
@@ -38,6 +42,7 @@ jobs:
         npm list
         echo "Checking system status..."
         ps -aux
+        echo "Checking network status..."
         netstat -tuln
       continue-on-error: true
 
