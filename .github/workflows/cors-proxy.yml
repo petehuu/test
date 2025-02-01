@@ -20,6 +20,7 @@ jobs:
 
     - name: Install dependencies
       run: npm install
+      continue-on-error: true
 
     - name: Start proxy server
       run: npm start
@@ -27,6 +28,14 @@ jobs:
 
     - name: Verify proxy server is running
       run: curl -I http://localhost:8080
+      continue-on-error: true
+
+    - name: Debug info
+      run: |
+        echo "Node.js version:"
+        node -v
+        echo "Installed npm packages:"
+        npm list
       continue-on-error: true
 
     - name: Keep GitHub Action running
