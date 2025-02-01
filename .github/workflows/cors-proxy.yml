@@ -26,11 +26,12 @@ jobs:
     - name: Start cors-anywhere server
       run: |
         node_modules/cors-anywhere/server.js --port 8080 --cors_headers '{"origin":"*"}' &
+        sleep 5  # Odotetaan 5 sekuntia, jotta palvelin ehtii käynnistyä
         echo "CORS Anywhere server started successfully"
 
     - name: Verify server is running
       run: |
-        curl -I http://localhost:8080
+        curl -I http://localhost:8080 || { echo "Failed to connect to server"; exit 1; }
         echo "Server verification completed"
 
     - name: Keep GitHub Action running
