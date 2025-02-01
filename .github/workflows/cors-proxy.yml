@@ -20,24 +20,23 @@ jobs:
 
     - name: Install dependencies
       run: |
-        npm install
+        npm install cors-anywhere
         echo "Dependencies installed"
 
-    - name: Start proxy server
+    - name: Start cors-anywhere server
       run: |
-        export LCP_CORS_ALLOWED=true  # Pakotetaan CORS-otsikot käyttöön
-        npm start
-        echo "Proxy server started successfully"
+        node_modules/cors-anywhere/server.js --port 8080 --cors_headers '{"origin":"*"}' &
+        echo "CORS Anywhere server started successfully"
 
-    - name: Verify proxy server is running
+    - name: Verify server is running
       run: |
         curl -I http://localhost:8080
-        echo "Proxy server verification completed"
+        echo "Server verification completed"
 
     - name: Keep GitHub Action running
       run: |
         while true; do
           sleep 60
           echo "Action is running..."
-          curl -sSf http://localhost:8080 || echo "Proxy server is down"
+          curl -sSf http://localhost:8080 || echo "Server is down"
         done
