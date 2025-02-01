@@ -19,7 +19,9 @@ jobs:
         node-version: '14'
 
     - name: Install dependencies
-      run: npm install
+      run: |
+        npm install
+        echo "Dependencies installed"
       continue-on-error: true
 
     - name: Start proxy server
@@ -48,5 +50,9 @@ jobs:
 
     - name: Keep GitHub Action running
       run: |
-        while true; do sleep 60; echo "Action is running..."; done
+        while true; do
+          sleep 60
+          echo "Action is running..."
+          curl -sSf http://localhost:8080 || echo "Proxy server is down"
+        done
       continue-on-error: true
