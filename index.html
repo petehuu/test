@@ -10,26 +10,24 @@
     <button onclick="testProxy()">Test Proxy</button>
 
     <script>
-        async function testProxy() {
+        function testProxy() {
             const proxyUrl = 'https://proxy.corsfix.com/?';  // Käytä CORS proxy URL:ia
             const targetUrl = 'https://hkp.maanmittauslaitos.fi/hkp/action?action_route=Coordinates&lat=59.98070939695573&lon=24.40447331965473&srs=EPSG:4326&targetSRS=EPSG:3067';
             const url = proxyUrl + encodeURIComponent(targetUrl);
 
-            try {
-                const response = await fetch(url, {
-                    headers: {
-                        'Origin': window.location.origin  // Lisää Origin-otsikko
+            const http = new XMLHttpRequest();
+            http.open("GET", url);
+            http.send();
+            http.onreadystatechange = (e) => {
+                if (http.readyState === 4) {
+                    if (http.status === 200) {
+                        console.log("Response data:", http.responseText);
+                        alert("Proxy test successful. Check the console for response data.");
+                    } else {
+                        console.error("Error testing proxy:", http.statusText);
+                        alert("Proxy test failed. Check the console for error details.");
                     }
-                });
-                if (!response.ok) {
-                    throw new Error(`Proxy request failed: ${response.statusText}`);
                 }
-                const data = await response.text();
-                console.log("Response data:", data);
-                alert("Proxy test successful. Check the console for response data.");
-            } catch (error) {
-                console.error("Error testing proxy:", error);
-                alert("Proxy test failed. Check the console for error details.");
             }
         }
     </script>
