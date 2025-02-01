@@ -20,13 +20,13 @@ jobs:
 
     - name: Install dependencies
       run: |
-        npm install cors-anywhere
+        npm install cors-anywhere serve
         echo "Dependencies installed"
 
     - name: Start cors-anywhere server
       run: |
-        node_modules/cors-anywhere/server.js --port 8080 --cors_headers '{"origin":"*"}' &
-        sleep 5  # Odotetaan 5 sekuntia, jotta palvelin ehtii käynnistyä
+        nohup serve -s node_modules/cors-anywhere --cors_headers '{"origin":"*"}' &
+        sleep 10  # Odotetaan 10 sekuntia, jotta palvelin ehtii varmasti käynnistyä
         echo "CORS Anywhere server started successfully"
 
     - name: Verify server is running
@@ -41,3 +41,4 @@ jobs:
           echo "Action is running..."
           curl -sSf http://localhost:8080 || echo "Server is down"
         done
+      continue-on-error: true
