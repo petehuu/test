@@ -11,16 +11,12 @@
 
     <script>
         async function testProxy() {
-            const proxyUrl = 'https://petehuu.github.io/test-proxy/';  // Muuta tämä omaksi GitHub Pages -proxy-URL:ksi
+            const proxyUrl = 'https://cors-anywhere.herokuapp.com/';  // Käytä julkista CORS proxy palvelinta
             const targetUrl = 'https://hkp.maanmittauslaitos.fi/hkp/action?action_route=Coordinates&lat=59.98070939695573&lon=24.40447331965473&srs=EPSG:4326&targetSRS=EPSG:3067';
-            const url = `${proxyUrl}${encodeURIComponent(targetUrl)}`;
+            const url = proxyUrl + targetUrl;
 
             try {
-                const response = await fetch(url, {
-                    headers: {
-                        'Access-Control-Allow-Origin': '*'
-                    }
-                });
+                const response = await fetch(url);
                 if (!response.ok) {
                     throw new Error(`Proxy request failed: ${response.statusText}`);
                 }
