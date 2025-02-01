@@ -11,7 +11,7 @@
 
     <script>
         async function testProxy() {
-            const proxyUrl = 'http://localhost:8080/proxy/';  // Käytä oikeaa proxy-URL:ia
+            const proxyUrl = 'https://proxy.corsfix.com/?';  // Käytä uutta CORS proxy URL:ia
             const targetUrl = 'https://hkp.maanmittauslaitos.fi/hkp/action?action_route=Coordinates&lat=59.98070939695573&lon=24.40447331965473&srs=EPSG:4326&targetSRS=EPSG:3067';
             const url = proxyUrl + encodeURIComponent(targetUrl);
 
