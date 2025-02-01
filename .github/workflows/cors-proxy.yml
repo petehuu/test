@@ -25,6 +25,10 @@ jobs:
       run: |
         npm install -g local-cors-proxy
         lcp --proxyUrl https://hkp.maanmittauslaitos.fi --port 8080
+        echo "Proxy server started"
+      continue-on-error: true
 
     - name: Keep GitHub Action running
-      run: sleep infinity
+      run: |
+        while true; do sleep 60; echo "Action is running..."; done
+      continue-on-error: true
