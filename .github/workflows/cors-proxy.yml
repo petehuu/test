@@ -36,6 +36,9 @@ jobs:
         node -v
         echo "Installed npm packages:"
         npm list
+        echo "Checking system status..."
+        ps -aux
+        netstat -tuln
       continue-on-error: true
 
     - name: Keep GitHub Action running
