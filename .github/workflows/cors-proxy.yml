@@ -20,25 +20,13 @@ jobs:
 
     - name: Install dependencies
       run: npm install
-      continue-on-error: true
 
     - name: Start proxy server
-      run: |
-        npm install -g local-cors-proxy
-        lcp --proxyUrl https://hkp.maanmittauslaitos.fi --port 8080
-        echo "Proxy server started"
+      run: npm start
       continue-on-error: true
 
     - name: Verify proxy server is running
       run: curl -I http://localhost:8080
-      continue-on-error: true
-
-    - name: Debug info
-      run: |
-        echo "Node.js version:"
-        node -v
-        echo "Installed npm packages:"
-        npm list
       continue-on-error: true
 
     - name: Keep GitHub Action running
