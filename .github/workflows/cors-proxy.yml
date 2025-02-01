@@ -28,6 +28,10 @@ jobs:
         echo "Proxy server started"
       continue-on-error: true
 
+    - name: Verify proxy server is running
+      run: curl -I http://localhost:8080
+      continue-on-error: true
+
     - name: Keep GitHub Action running
       run: |
         while true; do sleep 60; echo "Action is running..."; done
