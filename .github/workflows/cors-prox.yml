@@ -20,25 +20,38 @@ jobs:
 
     - name: Install dependencies
       run: |
-        npm install http-server
+        npm install
         echo "Dependencies installed"
 
-    - name: Start http-server
+    - name: Start CORS proxy
       run: |
-        npx http-server . -p 8080 --cors &
-        sleep 10  # Odotetaan 10 sekuntia, jotta palvelin ehtii käynnistyä
-        echo "HTTP server started successfully"
+        npm start &
+        sleep 10  # Wait 10 seconds for the server to start
+        echo "CORS proxy started successfully"
 
-    - name: Verify server is running
+    - name: Verify proxy is running
       run: |
-        curl -I http://localhost:8080 || { echo "Failed to connect to server"; exit 1; }
-        echo "Server verification completed"
+        if curl -I http://localhost:80; then
+          echo "Proxy verification completed"
+        else
+          echo "Failed to connect to proxy"
+          exit 1
+        fi
 
     - name: Keep GitHub Action running
       run: |
         while true; do
           sleep 60
           echo "Action is running..."
-          curl -sSf http://localhost:8080 || echo "Server is down"
+          if ! curl -sSf http://localhost:80; then
+            echo "Proxy is down"
+          fi
         done
       continue-on-error: true
+
+    - name: Terminate proxy gracefully
+      if: always()
+      run: |
+        echo "Terminating CORS proxy..."
+        pkill -f "local-cors-proxy"
+        echo "Proxy terminated"
