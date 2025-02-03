@@ -18,14 +18,14 @@ jobs:
 
     - name: Install dependencies
       run: |
-        npm install express cors
+        npm install http-server
         echo "Dependencies installed"
 
-    - name: Start express server
+    - name: Start http-server
       run: |
-        nohup node .github/workflows/server.js > server.log 2>&1 &
+        nohup npx http-server . -p 8080 --cors --headers "Access-Control-Allow-Origin: *" --headers "Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept" --headers "Access-Control-Allow-Methods: GET, POST, OPTIONS" --headers "Access-Control-Allow-Credentials: true" > server.log 2>&1 &
         sleep 10  # Wait 10 seconds for the server to start
-        echo "Express server with CORS started successfully"
+        echo "HTTP server started successfully"
 
     - name: Verify server is running
       run: |
@@ -35,14 +35,15 @@ jobs:
     - name: Keep server running and verify periodically
       run: |
         for i in {1..6}; do
+          echo "Check $i/6 - Verifying server status..."
           curl -sSf http://localhost:8080 && echo "Status OK" || { echo "Server is down"; break; }
           sleep 10
         done
       continue-on-error: true
 
-    - name: Stop express server
+    - name: Stop http-server
       if: always()
       run: |
         pkill node || echo "No server to stop"
         rm -f /tmp/stop-server
-        echo "Express server with CORS stopped"
+        echo "HTTP server stopped"
