@@ -1,37 +1,49 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Server Status</title>
-    <style>
-        .status-ok { color: green; }
-        .status-down { color: red; }
-    </style>
-</head>
-<body>
-    <h1>Server Status</h1>
-    <p id="server-status">Checking...</p>
+name: CORS Proxy
 
-    <script>
-        function checkServerStatus() {
-            fetch('http://localhost:8080')
-                .then(response => {
-                    if (response.ok) {
-                        document.getElementById('server-status').textContent = 'Status OK';
-                        document.getElementById('server-status').className = 'status-ok';
-                    } else {
-                        document.getElementById('server-status').textContent = 'Server is down';
-                        document.getElementById('server-status').className = 'status-down';
-                    }
-                })
-                .catch(error => {
-                    document.getElementById('server-status').textContent = 'Server is down';
-                    document.getElementById('server-status').className = 'status-down';
-                });
-        }
+on:
+  push:
+    branches:
+      - main
 
-        checkServerStatus();
-    </script>
-</body>
-</html>
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+
+    - name: Install dependencies
+      run: |
+        npm install http-server
+        echo "Dependencies installed"
+
+    - name: Start http-server
+      run: |
+        npx http-server . -p 8080 --cors &
+        sleep 10  # Wait 10 seconds for the server to start
+        echo "HTTP server started successfully"
+
+    - name: Verify server is running
+      run: |
+        curl -I http://localhost:8080 || { echo "Failed to connect to server"; exit 1; }
+        echo "Server verification completed"
+
+    - name: Keep server running
+      run: |
+        while true; do
+          curl -sSf http://localhost:8080 && echo "Status OK" || { echo "Server is down"; break; }
+          sleep 60
+        done
+      continue-on-error: true
+
+    - name: Stop http-server
+      if: always()
+      run: |
+        pkill http-server || echo "No server to stop"
+        echo "HTTP server stopped"
