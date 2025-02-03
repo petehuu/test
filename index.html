@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CORS Proxy Example</title>
+</head>
+<body>
+    <h1>CORS Proxy Example</h1>
+    <button id="fetchData">Fetch Data</button>
+    <pre id="result"></pre>
+
+    <script>
+        document.getElementById('fetchData').addEventListener('click', () => {
+            const proxyUrl = 'http://localhost:8080/';
+            const targetUrl = 'https://www.google.com/';
+
+            fetch(proxyUrl + targetUrl)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('result').textContent = JSON.stringify(data, null, 2);
+                })
+                .catch(error => {
+                    document.getElementById('result').textContent = 'Error: ' + error;
+                });
+        });
+    </script>
+</body>
+</html>
