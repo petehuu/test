@@ -18,35 +18,31 @@ jobs:
 
     - name: Install dependencies
       run: |
-        npm install http-server
+        npm install express cors
         echo "Dependencies installed"
 
-    - name: Start http-server
+    - name: Start express server
       run: |
-        nohup npx http-server . -p 8080 --cors --headers "Access-Control-Allow-Origin: *" --headers "Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept" --headers "Access-Control-Allow-Credentials: true" > server.log 2>&1 &
+        nohup node server.js > server.log 2>&1 &
         sleep 10  # Wait 10 seconds for the server to start
-        echo "HTTP server started successfully"
+        echo "Express server with CORS started successfully"
 
     - name: Verify server is running
       run: |
         curl -I http://localhost:8080 || { echo "Failed to connect to server"; exit 1; }
         echo "Server verification completed"
 
-    - name: Show index.html content once and verify periodically
+    - name: Keep server running and verify periodically
       run: |
-        curl -sSf http://localhost:8080 && echo "Status OK" || { echo "Server is down"; break; }
-        echo "Checked server status"
-        sleep 10  # Wait 10 seconds for next check
-        for i in {2..6}; do
-          echo "Check $i/6 - Verifying server status..."
-          curl -sSf http://localhost:8080 > /dev/null && echo "Status OK" || { echo "Server is down"; break; }
+        for i in {1..6}; do
+          curl -sSf http://localhost:8080 && echo "Status OK" || { echo "Server is down"; break; }
           sleep 10
         done
       continue-on-error: true
 
-    - name: Stop http-server
+    - name: Stop express server
       if: always()
       run: |
         pkill node || echo "No server to stop"
         rm -f /tmp/stop-server
-        echo "HTTP server stopped"
+        echo "Express server with CORS stopped"
