@@ -10,10 +10,10 @@ app.use(cors({
   credentials: true
 }));
 
-app.use(express.static(path.join(__dirname, '..'))); // Palvelimella on pääsy juurihakemistoon
+app.use(express.static(path.join(__dirname, '..', '..'))); // Viittaa juurihakemistoon
 
 app.get('/', (req, res) => {
-    const indexPath = path.join(__dirname, '..', 'index.html');
+    const indexPath = path.join(__dirname, '..', '..', 'index.html');
     console.log(`Serving index.html from: ${indexPath}`); // Lokitetaan tiedoston sijainti
     res.sendFile(indexPath, (err) => {
         if (err) {
