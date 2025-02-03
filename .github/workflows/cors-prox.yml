@@ -32,17 +32,8 @@ jobs:
         curl -I http://localhost:8080 || { echo "Failed to connect to server"; exit 1; }
         echo "Server verification completed"
 
-    - name: Keep server running until stopped manually
-      run: |
-        while true; do
-          if [ -f /tmp/stop-server ]; then
-            echo "Stop server signal received";
-            break;
-          fi
-          curl -sSf http://localhost:8080 && echo "Status OK" || { echo "Server is down"; break; }
-          sleep 30
-        done
-      continue-on-error: true
+    - name: Keep server running for a short duration (for testing)
+      run: sleep 60  # Keep the server running for 60 seconds to verify
 
     - name: Stop http-server
       if: always()
