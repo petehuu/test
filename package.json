@@ -9,7 +9,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start": "lcp --proxyUrl https://hkp.maanmittauslaitos.fi --port 8080"
+    "start": "lcp --proxyUrl https://hkp.maanmittauslaitos.fi --port 80"
   },
   "author": "",
   "license": "ISC"
