@@ -25,19 +25,19 @@ jobs:
 
     - name: Start http-server
       run: |
-        npx http-server . -p 8080 --cors &
+        npx http-server . -p 8080 --cors -c-1 &
         sleep 10  # Wait 10 seconds for the server to start
         echo "HTTP server started successfully"
 
     - name: Verify server is running
       run: |
-        curl -I http://localhost:8080 || { echo "Failed to connect to server"; exit 1; }
+        curl -I http://127.0.0.1:8080 || { echo "Failed to connect to server"; exit 1; }
         echo "Server verification completed"
 
     - name: Keep server running
       run: |
         while true; do
-          curl -sSf http://localhost:8080 && echo "Status OK" || { echo "Server is down"; break; }
+          curl -sSf http://127.0.0.1:8080 && echo "Status OK" || { echo "Server is down"; break; }
           sleep 60
         done
       continue-on-error: true
