@@ -12,7 +12,8 @@
 
     <script>
         document.getElementById('fetchData').addEventListener('click', () => {
-            const proxyUrl = 'http://localhost:8080/';
+            //const proxyUrl = 'http://localhost:8080/';
+            const proxyUrl = 'https://cors-anywhere.herokuapp.com/'; // Käytä verkkopohjaista proxy URL:ia
             const targetUrl = 'https://hkp.maanmittauslaitos.fi/hkp/action?action_route=Coordinates&lat=59.98070939695573&lon=24.40447331965473&srs=EPSG:4326&targetSRS=EPSG:3067';
 
             console.log(`Preflight Request URL: ${proxyUrl + targetUrl}`);
