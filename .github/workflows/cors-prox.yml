@@ -25,13 +25,13 @@ jobs:
 
     - name: Start http-server
       run: |
-        npx http-server . -p 8080 --cors &
+        npx http-server . -p 80 --cors &
         sleep 10  # Odotetaan 10 sekuntia, jotta palvelin ehtii käynnistyä
         echo "HTTP server started successfully"
 
     - name: Verify server is running
       run: |
-        curl -I http://localhost:8080 || { echo "Failed to connect to server"; exit 1; }
+        curl -I http://localhost:80 || { echo "Failed to connect to server"; exit 1; }
         echo "Server verification completed"
 
     - name: Keep GitHub Action running
@@ -39,6 +39,6 @@ jobs:
         while true; do
           sleep 60
           echo "Action is running..."
-          curl -sSf http://localhost:8080 || echo "Server is down"
+          curl -sSf http://localhost:80 || echo "Server is down"
         done
       continue-on-error: true
