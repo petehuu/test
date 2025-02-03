@@ -23,7 +23,7 @@ jobs:
 
     - name: Start http-server
       run: |
-        npx http-server . -p 8080 --cors &
+        npx http-server . -p 8080 --cors -c-1 --headers "Access-Control-Allow-Origin: *" &
         sleep 10  # Wait 10 seconds for the server to start
         echo "HTTP server started successfully"
 
@@ -48,4 +48,5 @@ jobs:
       if: always()
       run: |
         pkill http-server || echo "No server to stop"
+        rm -f /tmp/stop-server
         echo "HTTP server stopped"
