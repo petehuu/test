@@ -1,9 +1,6 @@
 name: CORS Proxy
 
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch: # Mahdollistaa manuaalisen käynnistyksen palvelimen pysäyttämiseksi
 
 jobs:
@@ -29,6 +26,11 @@ jobs:
         npx http-server . -p 8080 --cors &
         sleep 10  # Wait 10 seconds for the server to start
         echo "HTTP server started successfully"
+
+    - name: Verify server is running
+      run: |
+        curl -I http://localhost:8080 || { echo "Failed to connect to server"; exit 1; }
+        echo "Server verification completed"
 
     - name: Keep server running until stopped manually
       run: |
