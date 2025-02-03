@@ -1,9 +1,7 @@
 name: CORS Proxy
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch: # Mahdollistaa manuaalisen käynnistyksen
 
 jobs:
   build:
@@ -25,7 +23,7 @@ jobs:
 
     - name: Start http-server
       run: |
-        npx http-server . -p 8080 --cors &
+        nohup npx http-server . -p 8080 --cors --headers "Access-Control-Allow-Origin: *" > server.log 2>&1 &
         sleep 10  # Wait 10 seconds for the server to start
         echo "HTTP server started successfully"
 
@@ -34,11 +32,18 @@ jobs:
         curl -I http://localhost:8080 || { echo "Failed to connect to server"; exit 1; }
         echo "Server verification completed"
 
-    - name: Keep GitHub Action running
+    - name: Keep server running and verify periodically
       run: |
-        while true; do
-          sleep 60
-          echo "Action is running..."
-          curl -sSf http://localhost:8080 || echo "Server is down"
+        for i in {1..10}; do
+          curl -sSf http://localhost:8080 && echo "Status OK" || { echo "Server is down"; break; }
+          echo "Checked server status"
+          sleep 30
         done
       continue-on-error: true
+
+    - name: Stop http-server
+      if: always()
+      run: |
+        pkill node || echo "No server to stop"
+        rm -f /tmp/stop-server
+        echo "HTTP server stopped"
