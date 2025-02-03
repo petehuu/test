@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch: # Mahdollistaa manuaalisen käynnistyksen palvelimen pysäyttämiseksi
 
 jobs:
   build:
@@ -25,18 +26,17 @@ jobs:
 
     - name: Start http-server
       run: |
-        npx http-server . -p 8080 --cors -c-1 --headers "Access-Control-Allow-Origin: *" &
+        npx http-server . -p 8080 --cors &
         sleep 10  # Wait 10 seconds for the server to start
         echo "HTTP server started successfully"
 
-    - name: Verify server is running
-      run: |
-        curl -I http://localhost:8080 || { echo "Failed to connect to server"; exit 1; }
-        echo "Server verification completed"
-
-    - name: Keep server running
+    - name: Keep server running until stopped manually
       run: |
         while true; do
+          if [ -f /tmp/stop-server ]; then
+            echo "Stop server signal received";
+            break;
+          fi
           curl -sSf http://localhost:8080 && echo "Status OK" || { echo "Server is down"; break; }
           sleep 60
         done
