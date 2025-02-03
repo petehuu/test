@@ -1,0 +1,44 @@
+name: CORS Proxy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+
+    - name: Install dependencies
+      run: |
+        npm install http-server
+        echo "Dependencies installed"
+
+    - name: Start http-server
+      run: |
+        npx http-server . -p 8080 --cors &
+        sleep 10  # Wait 10 seconds for the server to start
+        echo "HTTP server started successfully"
+
+    - name: Verify server is running
+      run: |
+        curl -I http://localhost:8080 || { echo "Failed to connect to server"; exit 1; }
+        echo "Server verification completed"
+
+    - name: Keep GitHub Action running
+      run: |
+        while true; do
+          sleep 60
+          echo "Action is running..."
+          curl -sSf http://localhost:8080 || echo "Server is down"
+        done
+      continue-on-error: true
