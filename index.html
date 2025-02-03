@@ -15,8 +15,8 @@
 
     <script>
         function checkServerStatus() {
-            //fetch('https://petehuu.github.io/test', { // Käytetään GitHub Pages -osoitetta
-            fetch('http://localhost:3000', {    
+            const targetUrl = 'http://www.google.com'; // Vaihda haluttuun osoitteeseen
+            fetch(`http://localhost:3000/proxy?url=${encodeURIComponent(targetUrl)}`, {
                 mode: 'cors',
                 credentials: 'include'
             })
