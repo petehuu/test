@@ -2,9 +2,8 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const app = express();
-const port = 8080;
+const port = 8080; // tai portti 8081 jos vaihdettu
 
-// Käytetään yksinkertaista CORS-konfiguraatiota
 app.use(cors());
 
 app.use(express.static(path.join(__dirname, '..', '..')));
@@ -18,12 +17,6 @@ app.get('/', (req, res) => {
             res.status(500).send('Something went wrong!');
         }
     });
-});
-
-// Virheenkäsittely
-app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).send('Something went wrong!');
 });
 
 app.listen(port, () => {
