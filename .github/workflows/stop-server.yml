@@ -15,3 +15,12 @@ jobs:
       run: |
         touch /tmp/stop-server
         echo "Stop server signal sent"
+
+    - name: Verify stop signal
+      run: |
+        if [ -f /tmp/stop-server ]; then
+          echo "Stop signal file exists";
+        else
+          echo "Stop signal file does not exist";
+          exit 1;
+        fi
