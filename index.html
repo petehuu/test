@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Server Status</title>
+    <style>
+        .status-ok { color: green; }
+        .status-down { color: red; }
+    </style>
+</head>
+<body>
+    <h1>Server Status</h1>
+    <p id="server-status">Checking...</p>
+
+    <script>
+        function checkServerStatus() {
+            fetch('http://localhost:8080')
+                .then(response => {
+                    if (response.ok) {
+                        document.getElementById('server-status').textContent = 'Status OK';
+                        document.getElementById('server-status').className = 'status-ok';
+                    } else {
+                        document.getElementById('server-status').textContent = 'Server is down';
+                        document.getElementById('server-status').className = 'status-down';
+                    }
+                })
+                .catch(error => {
+                    document.getElementById('server-status').textContent = 'Server is down';
+                    document.getElementById('server-status').className = 'status-down';
+                });
+        }
+
+        checkServerStatus();
+    </script>
+</body>
+</html>
