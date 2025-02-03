@@ -1,20 +1,25 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const { createProxyMiddleware } = require('http-proxy-middleware');
 const app = express();
 const port = 8080;
 
 // Käytetään CORSia tarvittavilla asetuksilla
 app.use(cors({
   origin: 'http://localhost:8080',
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  allowedHeaders: 'Origin,X-Requested-With,Content-Type,Accept,Authorization',
-  credentials: true,
-  preflightContinue: false,
-  optionsSuccessStatus: 204
+  credentials: true
 }));
 
+// Staattisten tiedostojen tarjoaminen
 app.use(express.static(path.join(__dirname, '..', '..')));
+
+// Proxy-middleware
+app.use('/api', createProxyMiddleware({ 
+  target: 'http://localhost:8080',
+  changeOrigin: true,
+  pathRewrite: {'^/api' : ''}
+}));
 
 app.get('/', (req, res) => {
     const indexPath = path.join(__dirname, '..', '..', 'index.html');
