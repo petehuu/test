@@ -23,13 +23,13 @@ jobs:
 
     - name: Start express server
       run: |
-        node .github/workflows/express-server.js > server.log 2>&1 &
+        sudo node .github/workflows/express-server.js > server.log 2>&1 &
         sleep 10  # Wait 10 seconds for the server to start
         echo "Express server with CORS started successfully"
 
     - name: Verify server is running and log output
       run: |
-        curl -I http://localhost:8081 || { echo "Failed to connect to server"; exit 1; }
+        curl -I http://localhost || { echo "Failed to connect to server"; exit 1; }
         echo "Server verification completed"
         echo "=== Server Log Output ==="
         cat server.log || echo "No server log found"
@@ -39,7 +39,7 @@ jobs:
       run: |
         for i in {1..6}; do
           echo "Check $i/6 - Verifying server status..."
-          curl -sSf http://localhost:8081 && echo "Status OK" || { echo "Server is down"; break; }
+          curl -sSf http://localhost && echo "Status OK" || { echo "Server is down"; break; }
           sleep 10
         done
       continue-on-error: true
@@ -47,6 +47,6 @@ jobs:
     - name: Stop express server
       if: always()
       run: |
-        pkill node || echo "No server to stop"
+        sudo pkill node || echo "No server to stop"
         rm -f /tmp/stop-server
         echo "Express server with CORS stopped"
