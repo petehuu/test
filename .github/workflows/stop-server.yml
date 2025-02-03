@@ -27,12 +27,12 @@ jobs:
 
     - name: Stop http-server
       run: |
-        pkill http-server || { echo "No server process found"; }
+        pkill node || { echo "No server process found"; }
         echo "HTTP server process stopped"
 
     - name: Confirm server stopped
       run: |
-        if pgrep http-server > /dev/null; then
+        if pgrep node > /dev/null; then
           echo "Server is still running";
           exit 1;
         else
