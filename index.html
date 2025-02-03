@@ -18,7 +18,9 @@
             fetch('http://localhost:8080', {
                 mode: 'cors',
                 headers: {
-                    'Access-Control-Allow-Origin': '*'
+                    'Origin': 'http://localhost:8080',
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
                 }
             })
             .then(response => {
