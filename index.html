@@ -15,7 +15,8 @@
 
     <script>
         function checkServerStatus() {
-            fetch('https://petehuu.github.io/test', { // Käytetään GitHub Pages -osoitetta
+            //fetch('https://petehuu.github.io/test', { // Käytetään GitHub Pages -osoitetta
+            fetch('http://localhost:3000', {    
                 mode: 'cors',
                 credentials: 'include'
             })
