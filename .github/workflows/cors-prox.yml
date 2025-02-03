@@ -23,7 +23,7 @@ jobs:
 
     - name: Start http-server
       run: |
-        nohup npx http-server . -p 8080 --cors --headers "Access-Control-Allow-Origin: *" --headers "Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept" > server.log 2>&1 &
+        nohup npx http-server . -p 8080 --cors --headers "Access-Control-Allow-Origin: *" --headers "Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept" --headers "Access-Control-Allow-Credentials: true" > server.log 2>&1 &
         sleep 10  # Wait 10 seconds for the server to start
         echo "HTTP server started successfully"
 
@@ -34,11 +34,9 @@ jobs:
 
     - name: Show index.html content once and verify periodically
       run: |
-        # First check shows the index.html content
         curl -sSf http://localhost:8080 && echo "Status OK" || { echo "Server is down"; break; }
         echo "Checked server status"
         sleep 10  # Wait 10 seconds for next check
-        # Remaining checks do not show content, just verify status
         for i in {2..6}; do
           echo "Check $i/6 - Verifying server status..."
           curl -sSf http://localhost:8080 > /dev/null && echo "Status OK" || { echo "Server is down"; break; }
