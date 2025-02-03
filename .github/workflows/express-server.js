@@ -16,10 +16,10 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'index.html')); // Viittaa index.html tiedostoon juurihakemistossa
 });
 
-// Lisätään virhelokitus
+// Virheenkäsittely
 app.use((err, req, res, next) => {
     console.error(err.stack);
-    res.status(500).send('Something broke!');
+    res.status(500).send('Something went wrong!');
 });
 
 app.listen(port, () => {
