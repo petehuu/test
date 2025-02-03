@@ -11,12 +11,7 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Stop http-server
+    - name: Send stop signal
       run: |
-        pkill http-server || echo "No server to stop"
-        sleep 5  # Wait 5 seconds to ensure the process has time to stop
-        echo "HTTP server stopped"
-
-    - name: Confirm server stopped
-      run: |
-        pgrep http-server && { echo "Server did not stop"; exit 1; } || echo "Server successfully stopped"
+        touch /tmp/stop-server
+        echo "Stop server signal sent"
