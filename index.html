@@ -15,7 +15,7 @@
 
     <script>
         function checkServerStatus() {
-            fetch('http://localhost:8080')
+            fetch('http://localhost:8080', { mode: 'cors' })
                 .then(response => {
                     if (response.ok) {
                         document.getElementById('server-status').textContent = 'Status OK';
