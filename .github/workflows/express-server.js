@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const app = express();
-const port = 8080; // tai portti 8081 jos vaihdettu
+const port = 8081; // Vaihdettu porttiin 8081
 
 app.use(cors());
 
@@ -17,6 +17,12 @@ app.get('/', (req, res) => {
             res.status(500).send('Something went wrong!');
         }
     });
+});
+
+// Virheenkäsittely
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Something went wrong!');
 });
 
 app.listen(port, () => {
