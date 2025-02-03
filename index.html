@@ -17,6 +17,7 @@
         function checkServerStatus() {
             fetch('http://localhost:8080', {
                 mode: 'cors',
+                credentials: 'include',
                 headers: {
                     'Origin': 'http://localhost:8080',
                     'Content-Type': 'application/json',
