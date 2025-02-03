@@ -15,7 +15,8 @@
 
     <script>
         function checkServerStatus() {
-            fetch('http://localhost:3000/proxy', {
+            const targetUrl = 'http://www.google.com'; // Vaihda haluttuun osoitteeseen
+            fetch(`http://localhost:3000/proxy?url=${encodeURIComponent(targetUrl)}`, {
                 mode: 'cors',
                 credentials: 'include'
             })
