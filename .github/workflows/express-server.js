@@ -7,14 +7,18 @@ const port = 8080;
 // Käytetään CORSia tarvittavilla asetuksilla
 app.use(cors({
   origin: 'http://localhost:8080',
-  credentials: true
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  allowedHeaders: 'Origin,X-Requested-With,Content-Type,Accept,Authorization',
+  credentials: true,
+  preflightContinue: false,
+  optionsSuccessStatus: 204
 }));
 
-app.use(express.static(path.join(__dirname, '..', '..'))); // Viittaa juurihakemistoon
+app.use(express.static(path.join(__dirname, '..', '..')));
 
 app.get('/', (req, res) => {
     const indexPath = path.join(__dirname, '..', '..', 'index.html');
-    console.log(`Serving index.html from: ${indexPath}`); // Lokitetaan tiedoston sijainti
+    console.log(`Serving index.html from: ${indexPath}`);
     res.sendFile(indexPath, (err) => {
         if (err) {
             console.error(`Error sending index.html: ${err}`);
