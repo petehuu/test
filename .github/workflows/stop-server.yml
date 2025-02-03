@@ -1,0 +1,17 @@
+name: Stop Server
+
+on:
+  workflow_dispatch:
+
+jobs:
+  stop-server:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Stop http-server
+      run: |
+        pkill http-server || echo "No server to stop"
+        echo "HTTP server stopped"
