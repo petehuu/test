@@ -15,7 +15,7 @@
 
     <script>
         function checkServerStatus() {
-            fetch('http://localhost:8080', {
+            fetch('http://localhost:8080/api', { // Käytetään proxy-reittiä
                 mode: 'cors',
                 credentials: 'include',
                 headers: {
