@@ -29,7 +29,7 @@ jobs:
 
     - name: Verify server is running and log output
       run: |
-        curl -I http://localhost:8080 || { echo "Failed to connect to server"; exit 1; }
+        curl -I http://localhost:8081 || { echo "Failed to connect to server"; exit 1; }
         echo "Server verification completed"
         echo "=== Server Log Output ==="
         cat server.log || echo "No server log found"
@@ -39,7 +39,7 @@ jobs:
       run: |
         for i in {1..6}; do
           echo "Check $i/6 - Verifying server status..."
-          curl -sSf http://localhost:8080 && echo "Status OK" || { echo "Server is down"; break; }
+          curl -sSf http://localhost:8081 && echo "Status OK" || { echo "Server is down"; break; }
           sleep 10
         done
       continue-on-error: true
