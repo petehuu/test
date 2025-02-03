@@ -35,8 +35,8 @@ jobs:
     - name: Keep server running and verify periodically
       run: |
         for i in {1..10}; do
-          curl -sSf http://localhost:8080/index.html > /dev/null && echo "Status OK" || { echo "Server is down"; break; }
-          echo "Checked index.html content"
+          curl -sSf http://localhost:8080 && echo "Status OK" || { echo "Server is down"; break; }
+          echo "Checked server status"
           sleep 30
         done
       continue-on-error: true
