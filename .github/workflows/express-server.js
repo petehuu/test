@@ -13,17 +13,16 @@ app.use((req, res, next) => {
     next();
 });
 
+// Staattisten tiedostojen tarjoaminen
 app.use(express.static(path.join(__dirname, '..', '..')));
 
 // Proxy-middleware
 app.use('/proxy', createProxyMiddleware({
-  target: '', // Ei asetettu kohdetta, annetaan pyynnön määrittää kohde
+  target: 'http://www.google.com',
   changeOrigin: true,
-  pathRewrite: (path, req) => {
-    const target = req.query.url; // Käytetään query-parametria kohteen määrittämiseen
-    console.log(`Proxying request to: ${target}`);
-    return target ? path.replace('/proxy', '') : path; 
-  }
+  pathRewrite: {
+    '^/proxy': '',
+  },
 }));
 
 app.get('/', (req, res) => {
