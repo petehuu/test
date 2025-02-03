@@ -16,6 +16,12 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'index.html')); // Viittaa index.html tiedostoon juurihakemistossa
 });
 
+// Lisätään virhelokitus
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Something broke!');
+});
+
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
 });
