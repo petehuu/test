@@ -23,7 +23,7 @@ jobs:
 
     - name: Start http-server
       run: |
-        npx http-server . -p 8080 --cors --headers "Access-Control-Allow-Origin: *" &
+        nohup npx http-server . -p 8080 --cors --headers "Access-Control-Allow-Origin: *" > server.log 2>&1 &
         sleep 10  # Wait 10 seconds for the server to start
         echo "HTTP server started successfully"
 
@@ -32,7 +32,7 @@ jobs:
         curl -I http://localhost:8080 || { echo "Failed to connect to server"; exit 1; }
         echo "Server verification completed"
 
-    - name: Keep server running until stopped manually
+    - name: Keep server running
       run: |
         while true; do
           if [ -f /tmp/stop-server ]; then
@@ -40,7 +40,7 @@ jobs:
             break;
           fi
           curl -sSf http://localhost:8080 && echo "Status OK" || { echo "Server is down"; break; }
-          sleep 60
+          sleep 30
         done
       continue-on-error: true
 
