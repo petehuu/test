@@ -13,6 +13,7 @@ app.use((req, res, next) => {
     next();
 });
 
+// Staattisten tiedostojen tarjoaminen
 app.use(express.static(path.join(__dirname, '..', '..')));
 
 // Proxy-middleware
