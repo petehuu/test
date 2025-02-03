@@ -24,3 +24,7 @@ jobs:
           echo "Stop signal file does not exist";
           exit 1;
         fi
+
+    - name: Stop http-server
+      run: |
+        pkill http-server || { echo "No server process found";
