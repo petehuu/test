@@ -13,7 +13,6 @@ app.use((req, res, next) => {
     next();
 });
 
-// Staattisten tiedostojen tarjoaminen
 app.use(express.static(path.join(__dirname, '..', '..')));
 
 // Proxy-middleware
@@ -43,5 +42,5 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(port, '0.0.0.0', () => {
-    console.log(`Server running at http://localhost:${port}`);
+    console.log(`Server running at http://0.0.0.0:${port}`);
 });
