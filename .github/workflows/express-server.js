@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const app = express();
-const port = 80; // Portti 80
+const port = 3000; // Vaihdettu porttiin 3000
 
 app.use(cors());
 
@@ -25,6 +25,6 @@ app.use((err, req, res, next) => {
     res.status(500).send('Something went wrong!');
 });
 
-app.listen(port, '0.0.0.0', () => {
-    console.log(`Server running at http://0.0.0.0:${port}`);
+app.listen(port, () => {
+    console.log(`Server running at http://localhost:${port}`);
 });
