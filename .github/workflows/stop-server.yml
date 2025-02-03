@@ -14,4 +14,9 @@ jobs:
     - name: Stop http-server
       run: |
         pkill http-server || echo "No server to stop"
+        sleep 5  # Wait 5 seconds to ensure the process has time to stop
         echo "HTTP server stopped"
+
+    - name: Confirm server stopped
+      run: |
+        pgrep http-server && { echo "Server did not stop"; exit 1; } || echo "Server successfully stopped"
