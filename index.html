@@ -15,20 +15,22 @@
 
     <script>
         function checkServerStatus() {
-            fetch('http://127.0.0.1:8080', { mode: 'cors' }) // Huomaa muutettu osoite
-                .then(response => {
-                    if (response.ok) {
-                        document.getElementById('server-status').textContent = 'Status OK';
-                        document.getElementById('server-status').className = 'status-ok';
-                    } else {
-                        document.getElementById('server-status').textContent = 'Server is down';
-                        document.getElementById('server-status').className = 'status-down';
-                    }
-                })
-                .catch(error => {
+            fetch('http://127.0.0.1:8080', {
+                mode: 'cors'
+            })
+            .then(response => {
+                if (response.ok) {
+                    document.getElementById('server-status').textContent = 'Status OK';
+                    document.getElementById('server-status').className = 'status-ok';
+                } else {
                     document.getElementById('server-status').textContent = 'Server is down';
                     document.getElementById('server-status').className = 'status-down';
-                });
+                }
+            })
+            .catch(error => {
+                document.getElementById('server-status').textContent = 'Server is down';
+                document.getElementById('server-status').className = 'status-down';
+            });
         }
 
         checkServerStatus();
