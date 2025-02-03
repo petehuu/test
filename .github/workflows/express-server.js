@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const app = express();
-const port = 8081;
+const port = 80; // Vaihdettu porttiin 80
 
 app.use(cors());
 
