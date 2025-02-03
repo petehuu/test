@@ -39,7 +39,7 @@ jobs:
       run: |
         for i in {1..6}; do
           echo "Check $i/6 - Verifying server status..."
-          curl -sSf http://localhost:3000 && echo "Status OK" || { echo "Server is down"; break; }
+          curl -sSf http://localhost:3000/proxy?url=http://www.google.com && echo "Status OK" || { echo "Server is down"; break; }
           sleep 10
         done
       continue-on-error: true
