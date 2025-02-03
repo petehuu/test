@@ -16,6 +16,7 @@
     <script>
         function checkServerStatus() {
             fetch('http://localhost:8080', {
+                mode: 'cors',
                 credentials: 'include'
             })
             .then(response => {
