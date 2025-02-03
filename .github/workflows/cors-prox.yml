@@ -1,7 +1,7 @@
 name: CORS Proxy
 
 on:
-  workflow_dispatch: # Mahdollistaa manuaalisen käynnistyksen palvelimen pysäyttämiseksi
+  workflow_dispatch: # Mahdollistaa manuaalisen käynnistyksen
 
 jobs:
   build:
@@ -32,7 +32,7 @@ jobs:
         curl -I http://localhost:8080 || { echo "Failed to connect to server"; exit 1; }
         echo "Server verification completed"
 
-    - name: Keep server running
+    - name: Keep server running until stopped manually
       run: |
         while true; do
           if [ -f /tmp/stop-server ]; then
@@ -47,6 +47,6 @@ jobs:
     - name: Stop http-server
       if: always()
       run: |
-        pkill http-server || echo "No server to stop"
+        pkill node || echo "No server to stop"
         rm -f /tmp/stop-server
         echo "HTTP server stopped"
