@@ -23,7 +23,7 @@ jobs:
 
     - name: Start http-server
       run: |
-        nohup npx http-server . -p 8080 --cors --headers "Access-Control-Allow-Origin: *" > server.log 2>&1 &
+        nohup npx http-server . -p 8080 --cors --headers "Access-Control-Allow-Origin: *" --headers "Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept" > server.log 2>&1 &
         sleep 10  # Wait 10 seconds for the server to start
         echo "HTTP server started successfully"
 
