@@ -23,15 +23,17 @@ jobs:
         npm install
         echo "Dependencies installed"
 
-    - name: Start CORS proxy
+    - name: Start CORS proxy with logging
       run: |
         npm start &
         sleep 10  # Wait 10 seconds for the server to start
-        echo "CORS proxy started successfully"
+        echo "CORS proxy started successfully on port 8080"
+        ps aux  # List running processes to check if the proxy is running
+        netstat -tuln  # Check if port 8080 is being used
 
     - name: Verify proxy is running
       run: |
-        if curl -I http://localhost:80; then
+        if curl -I http://localhost:8080; then
           echo "Proxy verification completed"
         else
           echo "Failed to connect to proxy"
@@ -43,7 +45,7 @@ jobs:
         while true; do
           sleep 60
           echo "Action is running..."
-          if ! curl -sSf http://localhost:80; then
+          if ! curl -sSf http://localhost:8080; then
             echo "Proxy is down"
           fi
         done
