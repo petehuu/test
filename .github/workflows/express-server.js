@@ -2,17 +2,11 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const app = express();
-const port = 80; // Tai muu oikea portti
+const port = 3000; // Vaihdettu porttiin 3000
 
 app.use(cors());
 
 app.use(express.static(path.join(__dirname, '..', '..')));
-
-// Lokitus saapuvista pyynnöistä
-app.use((req, res, next) => {
-    console.log(`Received request: ${req.method} ${req.url}`);
-    next();
-});
 
 app.get('/', (req, res) => {
     const indexPath = path.join(__dirname, '..', '..', 'index.html');
