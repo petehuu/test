@@ -13,7 +13,14 @@ app.use(cors({
 app.use(express.static(path.join(__dirname, '..'))); // Palvelimella on pääsy juurihakemistoon
 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'index.html')); // Viittaa index.html tiedostoon juurihakemistossa
+    const indexPath = path.join(__dirname, '..', 'index.html');
+    console.log(`Serving index.html from: ${indexPath}`); // Lokitetaan tiedoston sijainti
+    res.sendFile(indexPath, (err) => {
+        if (err) {
+            console.error(`Error sending index.html: ${err}`);
+            res.status(500).send('Something went wrong!');
+        }
+    });
 });
 
 // Virheenkäsittely
