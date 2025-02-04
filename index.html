@@ -32,7 +32,7 @@
                     document.getElementById('server-status').className = 'status-down';
                     console.error('Fetch error:', error);
                 });
-            }, 5000); // Lisää 5 sekunnin viive, jotta palvelin ehtii käynnistyä
+            }, 10000); // Lisää 10 sekunnin viive, jotta palvelin ehtii käynnistyä
         }
 
         checkServerStatus();
