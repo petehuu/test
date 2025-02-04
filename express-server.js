@@ -10,11 +10,6 @@ app.use(cors({
     credentials: true,
 }));
 
-app.use((req, res, next) => {
-    console.log(`Received request: ${req.method} ${req.url}`);
-    next();
-});
-
 app.use(express.static(path.join(__dirname)));
 
 app.use('/proxy', createProxyMiddleware({
@@ -27,18 +22,12 @@ app.use('/proxy', createProxyMiddleware({
 
 app.get('/', (req, res) => {
     const indexPath = path.join(__dirname, 'index.html');
-    console.log(`Serving index.html from: ${indexPath}`);
     res.sendFile(indexPath, (err) => {
         if (err) {
             console.error(`Error sending index.html: ${err}`);
             res.status(500).send('Something went wrong!');
         }
     });
-});
-
-app.use((err, req, res, next) => {
-    console.error(`Error handling request for ${req.method} ${req.url}:`, err);
-    res.status(500).send('Something went wrong!');
 });
 
 const server = app.listen(port, '0.0.0.0', () => {
