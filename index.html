@@ -17,7 +17,8 @@
     <script>
         function checkServerStatus() {
             //fetch('http://127.0.0.1:3000/proxy', {
-            fetch('http://0.0.0.0:3000/proxy', {
+            //fetch('http://0.0.0.0:3000/proxy', {
+            fetch('/localhost:3000/proxy', {
                 mode: 'cors',
                 credentials: 'include'
             })
