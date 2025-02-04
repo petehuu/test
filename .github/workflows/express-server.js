@@ -5,7 +5,10 @@ const { createProxyMiddleware } = require('http-proxy-middleware');
 const app = express();
 const port = 3000;
 
-app.use(cors());
+app.use(cors({
+    origin: '*', // Salli kaikki alkuperät
+    credentials: true,
+}));
 
 // Lokitus saapuvista pyynnöistä
 app.use((req, res, next) => {
@@ -38,7 +41,7 @@ app.get('/', (req, res) => {
 
 // Virheenkäsittely
 app.use((err, req, res, next) => {
-    console.error(err.stack);
+    console.error(`Error handling request for ${req.method} ${req.url}:`, err);
     res.status(500).send('Something went wrong!');
 });
 
@@ -49,10 +52,3 @@ const server = app.listen(port, '0.0.0.0', () => {
 server.on('error', (err) => {
     console.error('Server error:', err);
 });
-
-app.use((err, req, res, next) => {
-    console.error(`Error handling request for ${req.method} ${req.url}:`, err);
-    res.status(500).send('Something went wrong!');
-});
-
-
