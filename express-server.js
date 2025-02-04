@@ -1,26 +1,22 @@
-
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const { createProxyMiddleware } = require('http-proxy-middleware');
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 app.use(cors({
-    origin: '*', // Salli kaikki alkuperät
+    origin: '*',
     credentials: true,
 }));
 
-// Lokitus saapuvista pyynnöistä
 app.use((req, res, next) => {
     console.log(`Received request: ${req.method} ${req.url}`);
     next();
 });
 
-// Staattisten tiedostojen tarjoaminen
-app.use(express.static(path.join(__dirname, '..', '..')));
+app.use(express.static(path.join(__dirname)));
 
-// Proxy-middleware
 app.use('/proxy', createProxyMiddleware({
   target: 'http://www.google.com',
   changeOrigin: true,
@@ -30,7 +26,7 @@ app.use('/proxy', createProxyMiddleware({
 }));
 
 app.get('/', (req, res) => {
-    const indexPath = path.join(__dirname, '..', '..', 'index.html');
+    const indexPath = path.join(__dirname, 'index.html');
     console.log(`Serving index.html from: ${indexPath}`);
     res.sendFile(indexPath, (err) => {
         if (err) {
@@ -40,7 +36,6 @@ app.get('/', (req, res) => {
     });
 });
 
-// Virheenkäsittely
 app.use((err, req, res, next) => {
     console.error(`Error handling request for ${req.method} ${req.url}:`, err);
     res.status(500).send('Something went wrong!');
