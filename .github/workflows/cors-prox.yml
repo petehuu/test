@@ -22,7 +22,7 @@ jobs:
     - name: Start express server
       run: |
         nohup node express-server.js > server.log 2>&1 &
-        sleep 10
+        sleep 2
         echo "Express server with CORS and proxy started successfully"
 
     - name: Verify server is running and log output
