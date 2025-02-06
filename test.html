@@ -12,6 +12,7 @@
 <body>
     <h1>Status</h1>
     <p id="status">Checking...</p>
+    <div id="fetch-url"></div>
     <div id="fetch-content"></div> <!-- Tämä elementti näyttää haetun sisällön -->
 
     <script>
@@ -20,6 +21,7 @@
             //const furl = 'http://0.0.0.0:3000/proxy';
               const furl = 'http://localhost:3000/proxy';
             //const furl = 'https://petehuu.github.io/test:3000/proxy';
+            document.getElementById('fetch-url').textContent = furl;
             fetch(furl, {
                 method: 'GET',
                 mode: 'cors',
