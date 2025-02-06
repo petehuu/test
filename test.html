@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Fetch</title>
+    <style>
+        .status-ok { color: green; }
+        .status-down { color: red; }
+    </style>
+</head>
+<body>
+    <h1>Status</h1>
+    <p id="status">Checking...</p>
+    <div id="fetch-content"></div> <!-- Tämä elementti näyttää haetun sisällön -->
+
+    <script>
+        function checkFetch() {
+            //const furl = 'http://127.0.0.1:3000/proxy';
+            //const furl = 'http://0.0.0.0:3000/proxy';
+              const furl = 'http://localhost:3000/proxy';
+            //const furl = 'https://petehuu.github.io/test:3000/proxy';
+            fetch(furl, {
+                method: 'GET',
+                mode: 'cors',
+                credentials: 'include'
+            })
+            .then(response => response.text()) // Hakee vastauksen tekstinä
+            .then(data => {
+                document.getElementById('status').textContent = 'Status OK';
+                document.getElementById('content').textContent = data; // Näyttää vastauksen
+            })
+            .catch(error => {
+                document.getElementById('status').textContent = 'Error';
+                console.error('Fetch error:', error);
+            });
+        }
+
+        checkFetch();
+    </script>
+</body>
+</html>
