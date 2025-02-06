@@ -8,6 +8,9 @@
 <body>
     <h1>Test CORS Proxy</h1>
     <div id="fetch-url"></div>
+    <p></p><p></p><p></p>
+    <div id="fetch-content"></div>
+    <p></p><p></p><p></p>
     <button onclick="testProxy()">Test Proxy</button>
 
     <script>
@@ -27,7 +30,8 @@
                 }
                 const data = await response.text();
                 console.log("Response data:", data);
-                alert("Proxy test successful. Check the console for response data.");
+                document.getElementById('fetch-content').textContent = data;
+                //alert("Proxy test successful. Check the console for response data.");
             } catch (error) {
                 console.error("Error testing proxy:", error);
                 alert("Proxy test failed. Check the console for error details.");
