@@ -24,7 +24,7 @@
             document.getElementById('fetch-url').textContent = furl;
             fetch(furl, {
                 method: 'GET',
-                mode: 'cors',
+                mode: 'no-cors',
                 credentials: 'include'
             })
             .then(response => response.text()) // Hakee vastauksen tekstinä
