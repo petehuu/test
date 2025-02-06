@@ -13,10 +13,10 @@ app.use(cors({
 app.use(express.static(path.join(__dirname)));
 
 app.use('/proxy', createProxyMiddleware({
-  //target: 'http://www.google.com',
-  //target: 'http://petehuu.github.io/proxy/index.html',
-  target: 'http://avoin-karttakuva.maanmittauslaitos.fi/ortokuvat-ja-korkeusmallit/wcs/v2?api-key=7cd2ddae-9f2e-481c-99d0-404e7bc7a0b2&service=WCS&version=2.0.1&request=GetCoverage&CoverageID=korkeusmalli_2m&SUBSET=E(355144,355148)&SUBSET=N(6652224,6652228)&format=text/plain',
-  //target: 'http://hkp.maanmittauslaitos.fi/hkp/action?action_route=Coordinates&lat=59.98070939695573&lon=24.40447331965473&srs=EPSG:4326&targetSRS=EPSG:3067',
+  target: 'http://www.google.com',  // ok
+  //target: 'http://petehuu.github.io/proxy/index.html',  // siirrerry 301
+  //target: 'http://avoin-karttakuva.maanmittauslaitos.fi/ortokuvat-ja-korkeusmallit/wcs/v2?api-key=7cd2ddae-9f2e-481c-99d0-404e7bc7a0b2&service=WCS&version=2.0.1&request=GetCoverage&CoverageID=korkeusmalli_2m&SUBSET=E(355144,355148)&SUBSET=N(6652224,6652228)&format=text/plain',  // tyhjä vastaus
+  //target: 'http://hkp.maanmittauslaitos.fi/hkp/action?action_route=Coordinates&lat=59.98070939695573&lon=24.40447331965473&srs=EPSG:4326&targetSRS=EPSG:3067',  // tyhjä vastaus
   changeOrigin: true,
   pathRewrite: {
     '^/proxy': '',
