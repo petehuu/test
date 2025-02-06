@@ -7,6 +7,7 @@
 </head>
 <body>
     <h1>CORS Proxy Example</h1>
+    <div id="fetch-url"></div>
     <button id="fetchData">Fetch Data</button>
     <pre id="result"></pre>
 
@@ -15,11 +16,12 @@
             //const proxyUrl = 'http://localhost:8080/';
             const proxyUrl = 'https://cors-anywhere.herokuapp.com/'; // Käytä verkkopohjaista proxy URL:ia
             const targetUrl = 'https://hkp.maanmittauslaitos.fi/hkp/action?action_route=Coordinates&lat=59.98070939695573&lon=24.40447331965473&srs=EPSG:4326&targetSRS=EPSG:3067';
-
-            console.log(`Preflight Request URL: ${proxyUrl + targetUrl}`);
+            const url = proxyUrl + targetUrl;
+            document.getElementById('fetch-url').textContent = url;
+            console.log(`Preflight Request URL: ${url}`);
 
             // Preflight OPTIONS request
-            fetch(proxyUrl + targetUrl, {
+            fetch(url, {
                 method: 'OPTIONS',
                 headers: {
                     'Access-Control-Request-Method': 'GET',
@@ -30,7 +32,7 @@
                 console.log('Preflight response status:', response.status);
                 if (response.ok) {
                     // Actual GET request
-                    return fetch(proxyUrl + targetUrl, {
+                    return fetch(url, {
                         method: 'GET',
                         headers: {
                             'Content-Type': 'application/json',
