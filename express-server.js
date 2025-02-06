@@ -14,7 +14,7 @@ app.use(express.static(path.join(__dirname)));
 
 app.use('/proxy', createProxyMiddleware({
   //target: 'http://www.google.com',
-  target: 'https://hkp.maanmittauslaitos.fi/hkp/action?action_route=Coordinates&lat=59.98070939695573&lon=24.40447331965473&srs=EPSG:4326&targetSRS=EPSG:3067',
+  target: 'http://hkp.maanmittauslaitos.fi/hkp/action?action_route=Coordinates&lat=59.98070939695573&lon=24.40447331965473&srs=EPSG:4326&targetSRS=EPSG:3067',
   changeOrigin: true,
   pathRewrite: {
     '^/proxy': '',
