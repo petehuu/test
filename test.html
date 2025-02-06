@@ -30,7 +30,7 @@
             .then(response => response.text()) // Hakee vastauksen tekstinä
             .then(data => {
                 document.getElementById('status').textContent = 'Status OK';
-                document.getElementById('content').textContent = data; // Näyttää vastauksen
+                document.getElementById('fetch-content').textContent = data; // Näyttää vastauksen
             })
             .catch(error => {
                 document.getElementById('status').textContent = 'Error';
